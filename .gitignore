@@ -135,18 +135,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# WordPress cache and uploads
-wp-content/cache/
+# WordPress cache
 wp-cache.php
-wp-content/uploads/
-wp-content/upgrade/
-wp-content/backups/
-wp-content/ai1wm-backups/
-
-
-# WordPress core files (если заливаешь только тему/плагин)
-wp-admin/
-wp-includes/
 
 # OS / IDE
 .DS_Store
