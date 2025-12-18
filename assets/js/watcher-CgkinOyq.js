@@ -1,0 +1,1 @@
+const r=[a,"[data-fsc-watcher]"];function a(s,e){const t=s.target.classList[0].match(/^([A-Za-z-]+)(?:__.*)?$/);s.isIntersecting?s.target.classList.add(`${t[1]}--active`):s.target.classList.remove(`${t[1]}--active`)}export{r as watcherObserverArray};

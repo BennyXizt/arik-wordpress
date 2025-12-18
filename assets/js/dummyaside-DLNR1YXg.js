@@ -1,0 +1,9 @@
+const h=""+new URL("../pages/fontIcons.html",import.meta.url).href,g=""+new URL("../pages/test.html",import.meta.url).href,u=""+new URL("../pages/about.html",import.meta.url).href,d=""+new URL("../pages/blog.html",import.meta.url).href,f=""+new URL("../pages/contacts.html",import.meta.url).href,w=""+new URL("../pages/index.html",import.meta.url).href,b=""+new URL("../pages/services.html",import.meta.url).href,L=""+new URL("../pages/work.html",import.meta.url).href,v=""+new URL("../pages/worksingle.html",import.meta.url).href;function R(){var l,m;const i=Object.assign({"/externe/pages/fontIcons.html":h,"/externe/pages/test.html":g}),c=Object.assign({"/about.html":u,"/blog.html":d,"/contacts.html":f,"/index.html":w,"/services.html":b,"/work.html":L,"/worksingle.html":v}),_=Object.entries(i).map(e=>{const n={externecomponents:"Prebildet Components",test:"Test Page",fonticons:"Font Icons"},t=e[0].match(/\/externe\/pages\/(.+)\.html$/)[1];return{name:n.hasOwnProperty(t.toLowerCase())?n[t.toLowerCase()]:t,link:e[0]}}),p=Object.entries(c).map(e=>{const n={index:"Main Page"},t=e[0].match(/\/(.+)\.html$/)[1];return{name:n.hasOwnProperty(t.toLowerCase())?n[t.toLowerCase()]:t,link:t.toLowerCase()==="index"?"/":e[0]}}),s=document.createElement("div"),o=document.createElement("ul"),a=document.createElement("div"),r=document.createElement("h6");p.forEach(e=>{o.innerHTML+=`
+            <li>
+                <a href='${e.link}'>${e.name[0].toUpperCase()+e.name.slice(1)}</a>
+            </li>
+        `}),_.forEach(e=>{r.innerHTML+=`
+            <li>
+                <a href='${e.link}'>${e.name[0].toUpperCase()+e.name.slice(1)}</a>
+            </li>
+        `}),s.innerHTML="<h6>Pages</h6>",s.append(o),a.innerHTML="<h6>Rest Files</h6>",a.append(r),(l=document.querySelector("[data-fsc-dummyaside]"))==null||l.append(s),(m=document.querySelector("[data-fsc-dummyaside]"))==null||m.append(a)}export{R as dummyasideAutoload};
