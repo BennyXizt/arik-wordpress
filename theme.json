@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "settings": {
+    "layout": {
+      "contentSize": "900px",
+      "wideSize": "1200px"
+    },
+    "spacing": {
+      "blockGap": "1.5rem"
+    },
+    "typography": {
+      "customFontSize": false,
+      "fontSizes": [
+        { "slug": "xsmall", "size": "12px", "name": "XS" },
+        { "slug": "small", "size": "14px", "name": "S" },
+        { "slug": "medium", "size": "18px", "name": "M" },
+        { "slug": "large", "size": "20px", "name": "L" },
+        { "slug": "xlarge", "size": "24px", "name": "XL" }
+      ]
+    },
+    "color": {
+      "custom": false,
+      "defaultPalette": false,
+      "palette": [
+        { "slug": "base", "color": "#dac5a7", "name": "Base" },
+        { "slug": "muted", "color": "rgba(218,197,167,0.6)", "name": "Muted" },
+        { "slug": "inverse", "color": "#0e0e0e", "name": "Inverse" },
+        { "slug": "inverse-muted", "color": "rgba(255,255,255,0.6)", "name": "Inverse Muted" },
+        { "slug": "background-secondary", "color": "#1a1a1a", "name": "Background Secondary" },
+        { "slug": "background-muted", "color": "rgba(218,197,167,0.05)", "name": "Background Muted" },
+        { "slug": "background-muted-2", "color": "rgba(255,255,255,0.07)", "name": "Background Muted 2" },
+        { "slug": "border-default", "color": "rgba(218,197,167,0.15)", "name": "Border Default" },
+        { "slug": "border-inverse", "color": "rgba(255,255,255,0.12)", "name": "Border Inverse" }
+      ]
+    }
+  },
+  "styles": {
+    "blocks": {
+      "core/group": {
+        "spacing": {
+          "padding": "0",
+          "margin": "0"
+        },
+        "typography": {
+          "lineHeight": "1.2"
+        }
+      },
+      "core/paragraph": {
+      }
+    }
+  }
+}
