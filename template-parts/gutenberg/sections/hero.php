@@ -9,14 +9,14 @@
     <div class="hero__container container">
         <figure class="hero__image image">
             <?php 
-                if(isset($fields['image'])) {
+                if(!empty($fields['image'])) {
                    echo wp_get_attachment_image($fields['image']['ID'], 'full', false, ['class'=>'']);
                 }
             ?>
         </figure>
         <?php 
-            if(isset($fields['headerText'])) {
-               get_template_part('template-parts/gutenberg/blocks/header-text');
+            if(!empty($fields['headerText'])) {
+               get_template_part('template-parts/gutenberg/blocks/header-text', null, ['blockClass'=>'hero']);
             }
         ?>
            

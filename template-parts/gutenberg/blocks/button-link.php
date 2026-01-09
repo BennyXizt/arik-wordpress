@@ -12,7 +12,7 @@
         'icon_clone' => get_field('icon_clone') ?? null
     ];
 
-    $blockClass = $args ? $args['class'] . '__button button' : 'button';
+    $blockClass = $args && isset($args['blockClass']) ? $args['blockClass'] . '__button button' : 'button';
     $blockSizes = ['small'=>'button--size-small'];
     $blockStyles = ['primary'=>'button--style-primary'];
     $blockTypes = ['button-text'=>'button--type-button-text'];
@@ -48,12 +48,12 @@
     <?= $dataAttributes ?>
     class="<?=$blockClass?>"
 >
-    <?php if($fields['hasLink'] && $fields['link']) : ?>
+    <?php if($fields['hasLink'] && !empty($fields['link'])) : ?>
         <?= esc_html($fields['link']['title']) ?>
-    <?php elseif(!$fields['hasLink'] && $fields['label']) : ?>
+    <?php elseif(!$fields['hasLink'] && !empty($fields['label'])) : ?>
         <?= esc_html($fields['label']) ?>
     <?php endif; ?>
-    <?php if($fields['icon_clone']) : ?>
+    <?php if(!empty($fields['icon_clone'])) : ?>
         <?php get_template_part('template-parts/gutenberg/blocks/icon') ?>
     <?php endif; ?>
             

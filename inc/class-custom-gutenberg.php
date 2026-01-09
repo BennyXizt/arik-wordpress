@@ -78,14 +78,18 @@ class Custom_Gutenberg {
 
     public function init() {
         if( function_exists('acf_register_block_type') ) {
+            $this->add_new_block('title');
+            $this->add_new_block('text');
             $this->add_new_block('headerText');
             $this->add_new_block('icon');
-            $this->add_new_block('button');
+            $this->add_new_block('button-link');
             $this->add_new_section('hero');
+            $this->add_new_section('clients');
+            $this->add_new_section('services');
         }
     }
 
-    public function render_block_callback($block, $content = '', $is_preview = false, $post_id = 0) {
+    public function render_template_callback($block, $content = '', $is_preview = false, $post_id = 0) {
         $name = str_replace('acf/', '', $block['name']);
 
         $field_type = null;
@@ -99,7 +103,7 @@ class Custom_Gutenberg {
             if($field_object) {
                 $field_type = $field_object['type'];
             }
-                
+            
             if(strpos($key, '_') === 0 || in_array($field_type, $unallowedTypes)) continue;
 
             if (is_array($value)) {
@@ -118,13 +122,18 @@ class Custom_Gutenberg {
         $preview     = $is_preview;
         $post_id     = $post_id;
 
-        $template_file = get_template_directory() . "/template-parts/gutenberg/blocks/{$name}.php";
-
+        if($block['supports']['acf_type'] === $this->block_category) {
+            $template_file = get_template_directory() . "/template-parts/gutenberg/blocks/{$name}.php";
+        }
+        else if($block['supports']['acf_type'] === $this->section_category) {
+            $template_file = get_template_directory() . "/template-parts/gutenberg/sections/{$name}.php";
+        }
+        $empty_template = get_template_directory() . "/template-parts/gutenberg/empty.php";
+        
         if($has_content && file_exists($template_file)) {
             include $template_file;
         }
-        else {
-            $empty_template = get_template_directory() . "/template-parts/gutenberg/empty.php";
+        else {        
             include $empty_template;
         }
     }
@@ -137,7 +146,7 @@ class Custom_Gutenberg {
                 __('%s Block для Gutenberg с ACF', $this->theme_id),
                 ucfirst($name)
             ),
-            'render_callback' => [$this, 'render_block_callback'],
+            'render_callback' => [$this, 'render_template_callback'],
             'category' => $this->block_category,
             'icon' => 'welcome-widgets-menus',
             'keywords' => array( 'example', 'acf' ),
@@ -145,6 +154,7 @@ class Custom_Gutenberg {
             'supports'        => [
                 'align' => true,
                 'jsx'   => true,
+                'acf_type' => $this->block_category
                 // 'color' => [
                 //     'text' => true,
                 //     'background' => true
@@ -164,7 +174,7 @@ class Custom_Gutenberg {
                 __('%s Section для Gutenberg с ACF', $this->theme_id),
                 ucfirst($name)
             ),
-            'render_template' => get_template_directory() . "/template-parts/gutenberg/sections/{$name}.php",
+            'render_callback' => [$this, 'render_template_callback'],
             'category' => $this->section_category,
             'icon' => 'screenoptions',
             'keywords' => array( 'example', 'acf' ),
@@ -172,6 +182,7 @@ class Custom_Gutenberg {
             'supports'        => [
                 'align' => true,
                 'jsx'   => true,
+                'acf_type' => $this->section_category
             ],
         ));
     }
