@@ -5,9 +5,6 @@
       "contentSize": "900px",
       "wideSize": "1200px"
     },
-    "spacing": {
-      "blockGap": "1.5rem"
-    },
     "typography": {
       "customFontSize": false,
       "fontSizes": [

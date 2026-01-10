@@ -14,10 +14,16 @@ class Custom_Gutenberg {
         $this->block_category = 'block';
         $this->section_category = 'section';
 
+        add_theme_support('editor-styles');
+        add_action('enqueue_block_editor_assets', [$this, 'mytheme_gutenberg_editor_assets']);
         add_filter('block_categories_all', [$this, 'add_new_category'], 10, 1);
         add_filter('acf/fields/wysiwyg/toolbars', [$this, 'change_standart_tinymce_toolbal'], 10, 1);
         add_filter('tiny_mce_before_init', [$this, 'add_support_span'], 10, 1);
         add_action('acf/init', [$this, 'init']);
+    }
+
+    public function mytheme_gutenberg_editor_assets() {
+        wp_enqueue_style('mytheme-editor-style', get_template_directory_uri() . '/assets/styles/css/editor-style.css', array(), wp_get_theme()->get('Version'));
     }
 
     public function change_standart_tinymce_toolbal($toolbars) {
@@ -80,7 +86,7 @@ class Custom_Gutenberg {
         if( function_exists('acf_register_block_type') ) {
             $this->add_new_block('title');
             $this->add_new_block('text');
-            $this->add_new_block('headerText');
+            $this->add_new_block('header-text');
             $this->add_new_block('icon');
             $this->add_new_block('button-link');
             $this->add_new_section('hero');
@@ -105,6 +111,8 @@ class Custom_Gutenberg {
             }
             
             if(strpos($key, '_') === 0 || in_array($field_type, $unallowedTypes)) continue;
+
+            
 
             if (is_array($value)) {
                 if (!empty(array_filter($value))) {
