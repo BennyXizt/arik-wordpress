@@ -19,10 +19,6 @@
         ];
     }
 
-    // var_dump($args);
-
-    
-
     $text_sizes = ['12', '14', '18', '20', '24'];
     if($fields['size'] !== 'default' && in_array($fields['size'], $text_sizes)) {
         $blockClass .= " text--size-{$fields['size']}";
