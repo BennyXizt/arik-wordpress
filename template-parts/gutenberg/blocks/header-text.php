@@ -18,10 +18,10 @@
         </div>
     <?php endif; ?>
     <?php if(!empty($fields['title_clone'])) : ?>
-       <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass' => 'headerText']) ?>
+       <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass' => 'headerText', 'data'=>$fields['title_clone']]) ?>
     <?php endif; ?>
     <?php if(!empty($fields['text_clone'])) : ?>
-        <?php get_template_part('template-parts/gutenberg/blocks/text', null, ['blockClass' => 'headerText']) ?>
+        <?php get_template_part('template-parts/gutenberg/blocks/text', null, ['blockClass' => 'headerText', 'data'=>$fields['text_clone']]) ?>
     <?php endif; ?>
     <?php if(!empty($fields['button_clone'])) : ?>
         <?php get_template_part('template-parts/gutenberg/blocks/button-link', null, ['blockClass' => 'headerText']) ?>
