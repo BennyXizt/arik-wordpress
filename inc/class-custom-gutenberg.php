@@ -89,9 +89,11 @@ class Custom_Gutenberg {
             $this->add_new_block('header-text');
             $this->add_new_block('icon');
             $this->add_new_block('button-link');
+            $this->add_new_block('work-card');
             $this->add_new_section('hero');
             $this->add_new_section('clients');
             $this->add_new_section('services');
+            $this->add_new_section('work');
         }
     }
 
