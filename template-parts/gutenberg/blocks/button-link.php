@@ -61,7 +61,7 @@
 ?>
 
 
-<?php if(!empty($fields['label']) || !empty($fields['hasLink']) || !empty($fields['icon_clone'])) : ?>
+<?php if(!empty($fields['label']) || !empty($fields['hasLink']) || !empty($fields['icon_clone']['file'])) : ?>
     <<?= $blockTypeLink ? $blockTypeLink : $blockType?> 
         <?= $dataAttributes ?>
         class="<?=$blockClass?>"
