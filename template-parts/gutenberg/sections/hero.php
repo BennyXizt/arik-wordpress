@@ -16,7 +16,7 @@
         </figure>
         <?php 
             if(!empty($fields['headerText'])) {
-               get_template_part('template-parts/gutenberg/blocks/header-text', null, ['blockClass'=>'hero']);
+               get_template_part('template-parts/gutenberg/blocks/header-text', null, ['blockClass'=>'hero', 'data'=>$fields['headerText']]);
             }
         ?>
            
