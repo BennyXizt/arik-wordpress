@@ -94,6 +94,7 @@ class Custom_Gutenberg {
             $this->add_new_section('clients');
             $this->add_new_section('services');
             $this->add_new_section('work');
+            $this->add_new_section('process');
         }
     }
 

@@ -58,12 +58,10 @@
         $target = !empty($fields['link']['target']) ? 'target="'. esc_attr($fields['link']['target']) .'"' : '';
         $blockTypeLink = "a {$url} {$target}";
     }
-   
-
 ?>
 
 
-<?php if(!empty($fields['label']) || !empty($fields['hasLink'])) : ?>
+<?php if(!empty($fields['label']) || !empty($fields['hasLink']) || !empty($fields['icon_clone'])) : ?>
     <<?= $blockTypeLink ? $blockTypeLink : $blockType?> 
         <?= $dataAttributes ?>
         class="<?=$blockClass?>"
