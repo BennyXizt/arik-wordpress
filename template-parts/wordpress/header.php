@@ -11,48 +11,8 @@
     $locations = get_nav_menu_locations();
     $desktopMenuID = $locations['header_menu'];
     $desktopMenyButtonsID = $locations['header_buttons'];
-    $desktopMenu = buildMenu(wp_get_nav_menu_items($desktopMenuID));
+    $desktopMenu = util_buildMenu(wp_get_nav_menu_items($desktopMenuID));
     $desktopMenuButtons = wp_get_nav_menu_items($desktopMenyButtonsID);
-    
-
-    function buildMenu($menuItems, $parentID = 0) {
-        $buffer = [];
-
-        foreach($menuItems as $item) {
-            if((int)$item->menu_item_parent === $parentID) {
-                $children = buildMenu($menuItems, (int)$item->ID);
-
-                $buffer[] = [
-                    'item' => $item,
-                    'children' => $children
-                ];
-            }
-        }
-
-        return $buffer;
-    }
-    function generateMenus($menu, $class = 'menu', $dept = 0) {
-        echo "<ul class='". ($dept > 0 ? "{$class}" : "{$class}__list") ."'>";
-        foreach($menu as $element) {
-            echo "<li class='{$class}__item". ($element['children'] ? " {$class}__item--submenu submenu-{$dept}" : "") ."'>";
-                if($element['item']->url !== '#') {
-                    echo "<a href='{$element['item']->url}' class='{$class}__link'>";
-                        echo $element['item']->title;
-                    echo '</a>';
-                }
-                else {
-                    echo "<div class='{$class}__link'>";
-                        echo $element['item']->title;
-                    echo '</div>';
-                }
-                
-                if($element['children']) {
-                    generateMenus($element['children'], 'submenu', $dept + 1);
-                }
-            echo '</li>';
-        }
-        echo '</ul>';
-    }
 ?>
 
 <header class="header">
@@ -77,7 +37,7 @@
             <?php endif; ?>
             <div class="header__menu menu">
                 <nav class="menu__body">
-                    <?php generateMenus($desktopMenu)?>
+                    <?php util_generateMenus($desktopMenu)?>
                 </nav>
             </div>
             <?php foreach($desktopMenuButtons as $button) : ?>

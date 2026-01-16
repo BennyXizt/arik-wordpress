@@ -96,6 +96,7 @@ class Custom_Gutenberg {
             $this->add_new_section('work');
             $this->add_new_section('process');
             $this->add_new_section('testimonials');
+            $this->add_new_section('about');
         }
     }
 
