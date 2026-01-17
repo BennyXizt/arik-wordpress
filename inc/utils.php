@@ -65,7 +65,7 @@ function util_displayLogo($class) {
         echo '</figure>';
     }
     else {
-        echo "<a href='{esc_url(home_url('/'))}' class='{$class}__logo'>";
+        echo "<a href='". esc_url(home_url('/')) ."' class='{$class}__logo'>";
 
         if($logo_file && $logo_ext === 'svg') {
             echo $logo_svg;
