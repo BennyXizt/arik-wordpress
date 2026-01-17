@@ -3,7 +3,7 @@
         'title_clone' => get_field('title_clone'),
         'button_clone' => get_field('button_clone'),
         'cards' => get_posts([
-            'post_type'      => 'work',
+            'post_type'      => 'work_cpt',
             'posts_per_page' => 4,
             'post_status'    => 'publish',
         ])

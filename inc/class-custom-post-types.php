@@ -3,16 +3,20 @@
 class Custom_Post_Type {
     private $types = [
         'testimonial' => [
-            'name'          => 'Testimonials',
-            'singular_name' => 'Testimonial',
+            'labels' => [
+                'name'          => 'Testimonials',
+                'singular_name' => 'Testimonial',
+            ],
             'supports'      => ['title', 'editor', 'thumbnail'],
-            'icon'          => 'dashicons-testimonial',
+            'menu_icon'     => 'dashicons-testimonial',
         ],
-        'work' => [
-            'name' => 'Works',
-            'singular_name' => 'Work',
+        'work_cpt' => [
+            'labels' => [
+                'name' => 'Works',
+                'singular_name' => 'Work',
+            ],
             'supports'      => ['title', 'editor', 'thumbnail'],
-            'icon'          => 'dashicons-portfolio',
+            'menu_icon'     => 'dashicons-portfolio',
         ]
     ];
 
@@ -21,17 +25,11 @@ class Custom_Post_Type {
     }
     public function init() {
         foreach($this->types as $slug => $config) {
-            register_post_type($slug, [
-                'labels' => [
-                    'name'          => $config['name'],
-                    'singular_name' => $config['singular_name'],
-                ],
+            register_post_type($slug, array_merge($config, [
                 'public'        => true,
                 'show_in_rest'  => true, 
                 'has_archive'   => true,
-                'supports'      => $config['supports'],
-                'menu_icon'     => $config['icon'],
-            ]);
+            ]));
         }
     }
 }

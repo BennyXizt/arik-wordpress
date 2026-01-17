@@ -3,18 +3,21 @@
 class Custom_Taxonomy {
     private $types = [
         'work_category' => [
-            'postTypes'     => ['work'],
-            'labels'        => [
-                'name'              => 'Categories',
-                'singular_name'     => 'Category',
-                'search_items'      => 'Search Categories',
-                'all_items'         => 'All Categories',
-                'edit_item'         => 'Edit Category',
-                'add_new_item'      => 'Add New Category',
-                'menu_name'         => 'Categories',
-            ],
-            'hierarchical' => false,
-            'rewrite' => ['slug' => 'services/type']
+            'postTypes'     => ['work_cpt'],
+            'data' => 
+                [
+                    'labels'        => [
+                    'name'              => 'Categories',
+                    'singular_name'     => 'Category',
+                    'search_items'      => 'Search Categories',
+                    'all_items'         => 'All Categories',
+                    'edit_item'         => 'Edit Category',
+                    'add_new_item'      => 'Add New Category',
+                    'menu_name'         => 'Categories',
+                ],
+                'hierarchical' => false,
+                'rewrite' => ['slug' => 'services/type']
+            ]
         ],
     ];
 
@@ -23,14 +26,11 @@ class Custom_Taxonomy {
     }
     public function init() {
         foreach($this->types as $slug => $config) {
-            register_taxonomy($slug, $config['postTypes'], [
-                'labels' => $config['labels'],
-                'hierarchical' => $config['hierarchical'],
+            register_taxonomy($slug, $config['postTypes'], array_merge($config['data'], [
                 'show_ui'      => true,
                 'show_admin_column' => true,
-                'rewrite'      => $config['rewrite'],
                 'show_in_rest' => true, 
-            ]);
+            ]));
         }
     }
 }
