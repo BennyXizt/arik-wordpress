@@ -7,6 +7,12 @@ class Custom_Post_Type {
             'singular_name' => 'Testimonial',
             'supports'      => ['title', 'editor', 'thumbnail'],
             'icon'          => 'dashicons-testimonial',
+        ],
+        'work' => [
+            'name' => 'Works',
+            'singular_name' => 'Work',
+            'supports'      => ['title', 'editor', 'thumbnail'],
+            'icon'          => 'dashicons-portfolio',
         ]
     ];
 

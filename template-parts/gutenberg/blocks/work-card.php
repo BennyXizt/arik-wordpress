@@ -2,55 +2,62 @@
     $args = $args ?? null;
 
     if($args) {
+        $id = $args['data']->ID;
+        $background = get_field('background', $id) ?: [];
+        $terms = get_the_terms($id, 'work_category');
+        $term = $terms[0] ?? [];
+
         $fields = [
-            'noise' => $args['data']['noise'],
-            'icon_clone' => $args['data']['icon_clone'],
-            'image' => $args['data']['image'],
-            'title_clone' => $args['data']['title_clone'],
-            'link' => $args['data']['link'],
+            'title' => get_the_title($id),
+            'image' => get_post_thumbnail_id($id),
+            'link' => get_permalink($id),
+            'background' => $background,
+            'icon' => $background['icon'] ?? null,
+            'noise' => $background['noise'] ?? null,
+            'term' => $term,
+            'termLink' => isset($term->term_id) ? get_term_link($term->term_id) : null
         ];
     }
-    else {
-        $fields = [
-            'noise' => get_field('noise'),
-            'icon_clone' => get_field('icon_clone'),
-            'image' => get_field('image'),
-            'title_clone' => get_field('title_clone'),
-            'link' => get_field('link'),
-        ];
-    }
-
-    $url = !empty($fields['link']['url']) ? 'href="'. esc_url($fields['link']['url']) .'"' : '';
-    $target = !empty($fields['link']['target']) ? 'target="'. esc_attr($fields['link']['target']) .'"' : '';
-    $blockTypeLink = "a {$url} {$target}";
-
 ?>
 
 <div class="workCard">
     <div class="workCard__background">
-        <?php if(!empty($fields['noise'])) : ?>
-            <figure class="workCard__noise image">
-                <?php echo wp_get_attachment_image($fields['noise']['ID'], 'full', false, ['class'=>'']) ; ?>
-            </figure>
+        <?php if(!empty($fields['link'])) : ?>
+            <a href="<?= esc_url($fields['link']) ?>">
         <?php endif; ?>
-        <?php if(!empty($fields['icon_clone'])) : ?>
-            <?php get_template_part('template-parts/gutenberg/blocks/icon', null, ['blockClass'=>'workCard', 'data'=>$fields['icon_clone']]); ?>
-        <?php endif; ?>
-        <?php if(!empty($fields['image'])) : ?>
-            <figure class="workCard__image image">
-                <?php echo wp_get_attachment_image($fields['image']['ID'], 'full', false, ['class'=>'']) ; ?>
-            </figure>
+            <?php if(!empty($fields['noise'])) : ?>
+                <figure class="workCard__noise image">
+                    <?php echo wp_get_attachment_image($fields['noise']['ID'], 'full', false, ['class'=>'']) ; ?>
+                </figure>
+            <?php endif; ?>
+            <?php if(!empty($fields['icon'])) : ?>
+                <?php get_template_part('template-parts/gutenberg/blocks/icon', null, ['blockClass'=>'workCard', 'data'=>$fields['icon']]); ?>
+            <?php endif; ?>
+            <?php if(!empty($fields['image'])) : ?>
+                <figure class="workCard__image image">
+                    <?php echo wp_get_attachment_image($fields['image'], 'full', false, ['class'=>'']) ; ?>
+                </figure>
+            <?php endif; ?>
+        <?php if(!empty($fields['link'])) : ?>
+            </a>
         <?php endif; ?>
     </div>
     <div class="workCard__content">
-        <?php if(!empty($fields['title_clone'])) : ?>
-            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'workCard', 'data'=>$fields['title_clone']]) ?>
+        <?php if(!empty($fields['title'])) : ?>
+            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'workCard', 'data'=> [
+                'title' => $fields['title'],
+                'type' => 'h4'
+            ]]) ?>
         <?php endif; ?>
-        <?php if(isset($fields['link']['title'])) : ?>
-            <a <?= $url . ' ' . $target ?>>
-                <span class="workCard__text">
-                    <?= esc_html($fields['link']['title']); ?>
-                </span>
+        <?php if(!empty($fields['termLink'])) : ?>
+            <a href="<?= esc_url($fields['termLink']) ?>">
+        <?php endif; ?>
+        <?php if(!empty($fields['term'])) : ?>
+            <span class="workCard__text">
+                <?= $fields['term']->name ?>
+            </span>
+        <?php endif; ?>
+        <?php if(!empty($fields['termLink'])) : ?>
             </a>
         <?php endif; ?>
     </div>

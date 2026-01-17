@@ -16,8 +16,7 @@
                 </nav>
             </div>
             <?php foreach($desktopMenuButtons as $button) : ?>
-                <a href="<?=$button->url?>" class="header__button button button--size-small button--style-primary"
-                >
+                <a href="<?=$button->url?>" class="header__button button button--size-small button--style-primary">
                     <?=$button->title?>
                 </a>
             <?php endforeach; ?>
