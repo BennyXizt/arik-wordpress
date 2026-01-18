@@ -12,7 +12,8 @@
             'size' => $args['data']['size'] ?? null,
             'style' => $args['data']['style'] ?? null,
             'type' => $args['data']['type'] ?? null,
-            'icon_clone' => $args['data']['icon_clone'] ?? null
+            'icon_clone' => $args['data']['icon_clone'] ?? null,
+            'attrType' => $args['data']['attrType'] ?? null
         ];
     }
     else {
@@ -26,13 +27,11 @@
             'size' => get_field('size') ?? null,
             'style' => get_field('style') ?? null,
             'type' => get_field('type') ?? null,
-            'icon_clone' => get_field('icon_clone') ?? null
+            'icon_clone' => get_field('icon_clone') ?? null,
+            'attrType' => null
         ];
     }
 
-    
-
-    
     $blockSizes = ['small'=>'button--size-small'];
     $blockStyles = ['primary'=>'button--style-primary'];
     $blockTypes = ['button-text'=>'button--type-button-text'];
@@ -57,6 +56,9 @@
         $url = !empty($fields['link']['url']) ? 'href="'. esc_url($fields['link']['url']) .'"' : '';
         $target = !empty($fields['link']['target']) ? 'target="'. esc_attr($fields['link']['target']) .'"' : '';
         $blockTypeLink = "a {$url} {$target}";
+    }
+    else if($blockType === "button" && !empty($fields['attrType'])) {
+        $dataAttributes .= ' type="'. esc_attr($fields['attrType']) .'"';
     }
 ?>
 

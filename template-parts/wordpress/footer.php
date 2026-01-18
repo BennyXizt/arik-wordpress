@@ -21,7 +21,9 @@
                     echo '<ul data-fsc-accordion-body class="accordion__body">';
                     if($element['children']) {
                         foreach ($element['children'] as $child) {
-                            echo '<li>'. $child['item']->title .'</li>';
+                            echo '<li>';
+                            echo '<a href = "'. esc_url($child['item']->url) .'">'. esc_html($child['item']->title)  .'</a>';
+                            echo '<li>';
                         }
                     }
                     echo '</ul>';

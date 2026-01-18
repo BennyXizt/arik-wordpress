@@ -7,7 +7,7 @@
         $fields = [
             'title' => wp_kses($args['data']['title'] ?? '', [
                 'span' => []
-            ]),
+            ]) ?: get_the_title(),
             'type' => $args['data']['type'] ?? 'h2',
             'color' => $args['data']['color'] ?? ''
         ];
@@ -17,11 +17,13 @@
         $fields = [
             'title' => wp_kses(get_field('title') ?? '', [
                 'span' => []
-            ]),
+            ]) ?: get_the_title(),
             'type' => get_field('type') ?? 'h2',
             'color' => get_field('color') ?? '',
         ];
     }
+
+    
 
     $color = !empty($fields['color']) ? 'style="color: '. $fields['color'] .'"' : '';
 ?>
