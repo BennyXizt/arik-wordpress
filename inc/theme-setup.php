@@ -8,7 +8,7 @@ function mytheme_setup() {
         if (current_user_can('administrator')) {
             $mimes['svg'] = 'image/svg+xml';
         }
-
+        
         return $mimes;
     });
 

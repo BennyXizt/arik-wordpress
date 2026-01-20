@@ -5,6 +5,7 @@ esc_html($var); // text
 esc_url($var); // href, src, action
 esc_attr($var); // attr
 wp_get_attachment_image($fields['image']['ID'], 'full', false, ['class'=>'']); // responsive img
+get_theme_mod('CustomizeSettingsID'); // get value from customizer
 
 // custom post
 get_posts([
@@ -69,6 +70,7 @@ if($logo_file) {
 }
 // custom logo
 
-// array
-
-// array
+// get item from Customize
+$sanitizedKey = sanitize_key(wp_get_theme()->get('Name') . 'ExistedCustomizeSettingID');
+$item = get_theme_mod($sanitizedKey, '');
+// get item from Customize

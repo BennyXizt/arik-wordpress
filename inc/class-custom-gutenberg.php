@@ -99,6 +99,7 @@ class Custom_Gutenberg {
             $this->add_new_section('testimonials');
             $this->add_new_section('about');
             $this->add_new_section('contacts');
+            $this->add_new_section('hero-service');
         }
     }
 

@@ -32,6 +32,28 @@
         }
         echo '</ul>';
     }
+
+    $filteredCopyright = sanitize_key(wp_get_theme()->get('Name') . '_copyright_label');
+    $filteredButtonLabel = sanitize_key(wp_get_theme()->get('Name') . '_copyright_button_label');
+    $filteredButtonScroll = sanitize_key(wp_get_theme()->get('Name') . '_copyright_button_scroll');
+    $filteredButtonFile = sanitize_key(wp_get_theme()->get('Name') . '_copyright_button_file');
+    $filteredButtonIconName = sanitize_key(wp_get_theme()->get('Name') . '_copyright_button_icon_name');
+
+    $buttonAttr = get_theme_mod($filteredButtonScroll) ? 
+        'data-fsc-scroll data-fsc-scroll-to='. esc_html(get_theme_mod($filteredButtonScroll))  .' data-fsc-scroll-behaviour=smooth data-fsc-scroll-block=start' : 
+        '';
+
+    $fields = [
+        'copyright' => get_theme_mod($filteredCopyright),
+        'button' => [
+            'label' => get_theme_mod($filteredButtonLabel),
+            'icon' => [
+                'file' => get_template_directory_uri() . '/assets/media/icons/sprite.svg',
+                'icon_name' => get_theme_mod($filteredButtonIconName),
+                'rounded' => true
+            ]
+        ],
+    ];
 ?>
 
 <footer class="footer">
@@ -58,67 +80,23 @@
             </div>
             <?php if(!empty($footerMenu )) : ?>
                 <?php generateFooterMenu($footerMenu); ?>
-                <!-- <ul class="body-footer__list">
-                    <?php foreach($footerMenu as $footer) : ?>
-                        <li class="body-footer__item">
-                            <article
-                                data-fsc-accordion
-                                data-fsc-accordion-behaviour="default"
-                                data-fsc-accordion-media-query="max-width: 767.98px"
-                                class="body-footer__accordion accordion"
-                            >
-                                <div data-fsc-accordion-summary class="accordion__top">
-                                    <h6 class="accordion__title">Pages</h6>
-
-                                    <svg class="accordion__icon">
-                                        <use href="./assets/media/sprite.svg#ph_plus-light"></use>
-                                    </svg>
-                                </div>
-                                <ul data-fsc-accordion-body class="accordion__body">
-                                    <li>Home</li>
-
-                                    <li>Services</li>
-
-                                    <li>About</li>
-
-                                    <li>Contact</li>
-                                </ul>
-                            </article>
-
-                            <button class="button button--size-small button--style-primary">
-                                More Templates
-
-                                <svg class="icon">
-                                <use
-                                    href="./media/icons/sprite.svg#ph_arrow-up-right-light"
-                                ></use>
-                                </svg>
-                            </button>
-                        </li>
-                    <?php endforeach; ?>
-                </ul> -->
             <?php endif; ?>
         </div>
         <div class="footer__bottom bottom-footer">
-            <div class="bottom-footer__copyright">
-                © 2022 Made by Pawel Gola. Powered by Framer..
-            </div>
-
-            <button
-                data-fsc-scroll
-                data-fsc-scroll-to="main"
-                data-fsc-scroll-behaviour="smooth"
-                data-fsc-scroll-block="start"
-                class="bottom-footer__up button button--type-button-text"
-            >
-                To Top
-
-                <div class="bottom-footer__icon-rounded icon-rounded">
-                <svg class="icon-rounded__icon">
-                    <use href="./media/icons/sprite.svg#ph_arrow-up-light"></use>
-                </svg>
+            <?php if(!empty($fields['copyright'])) : ?>
+                <div class="bottom-footer__copyright">
+                    <?= esc_html($fields['copyright']) ?>
                 </div>
-            </button>
+            <?php endif; ?>
+            <?php if(!empty($fields['button'])) : ?>
+                <button <?= esc_attr($buttonAttr) ?> class="bottom-footer__up button button--type-button-text">
+                    <?= $fields['button']['label'] ?? esc_html($fields['button']['label']) ?>
+
+                    <?php if(!empty($fields['button']['icon'])) : ?>
+                        <?php get_template_part('template-parts/gutenberg/blocks/icon', null, ['blockClass'=>'bottom-footer', 'data'=>$fields['button']['icon']]) ?>
+                    <?php endif; ?>
+                </button>
+            <?php endif; ?>
         </div>
     </div>
 </footer>
