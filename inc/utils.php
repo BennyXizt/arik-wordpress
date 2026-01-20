@@ -18,25 +18,46 @@ function util_buildMenu($menuItems, $parentID = 0) {
 
     return $buffer;
 }
-function util_generateMenus($menu, $class = 'menu', $dept = 0) {
+function util_generateMenus($menu, $class = 'menu', $parentClass = 'menu', $depth = 0) {
     if(empty( $menu )) return;
 
-    echo "<ul class='". ($dept > 0 ? "{$class}" : "{$class}__list") ."'>";
+
+    echo "<ul class='{$class}__list'>";
+
     foreach($menu as $element) {
-        echo "<li class='{$class}__item". ($element['children'] ? " {$class}__item--submenu submenu-{$dept}" : "") ."'>";
+        $activeLinkPageClass = in_array('current-menu-item', $element['item']->classes) ? "{$class}__link--active" : '';
+        $submenuClass = !empty($element['children']) ? 'submenu-'.$parentClass : '';
+        $liClass = !empty($element['children']) ? "{$class}__item {$class}__item--submenu {$submenuClass}" : "{$class}__item";
+        $linkClass = !empty($element['children']) ? "{$class}__link {$class}__link--submenu {$activeLinkPageClass}" : "{$class}__link {$activeLinkPageClass}";
+        $spanClass = $depth === 0 ? "{$submenuClass}__trigger {$submenuClass}__trigger--first {$activeLinkPageClass}" : "{$submenuClass}__trigger";
+        $iconClass = !empty($element['children']) ? $submenuClass : $class;
+
+        echo "<li class='{$liClass}'>";
             if($element['item']->url !== '#') {
-                echo "<a href='{$element['item']->url}' class='{$class}__link'>";
-                    echo $element['item']->title;
-                echo '</a>';
+                echo "<a href='{$element['item']->url}' class='{$linkClass}'>";
             }
-            else {
-                echo "<div class='{$class}__link'>";
-                    echo $element['item']->title;
-                echo '</div>';
+
+            if($element['children']) {
+                echo "<span class='{$spanClass}'>";
+            }
+
+            echo $element['item']->title;
+
+            if($element['children']) {
+                get_template_part('template-parts/gutenberg/blocks/icon', null, ['blockClass'=>$iconClass, 'data'=>[
+                    'file' => get_template_directory_uri() . '/assets/media/icons/sprite.svg',
+                    'icon_name' => 'ph_arrow-drop-down-line',
+                    'rounded' => false
+                ]]);
+                echo '</span>';
+            }
+
+            if($element['item']->url !== '#') {
+                echo '</a>';
             }
             
             if($element['children']) {
-                util_generateMenus($element['children'], 'submenu', $dept + 1);
+                util_generateMenus($element['children'], 'submenu-menu', 'menu', $depth + 1);
             }
         echo '</li>';
     }

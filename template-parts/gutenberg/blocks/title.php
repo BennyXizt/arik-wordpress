@@ -3,11 +3,15 @@
 
     if($args) {
         $blockClass = isset($args['blockClass']) ? 'class="'.$args['blockClass'].'__title"' : '';
+        $title = '';
+        if(!empty($args['data']['title'] && $args['data']['title'] !== null)) {
+            $title = wp_kses($args['data']['title'] ?? '', [
+                'span' => []
+            ]) ?: get_the_title();
+        }
 
         $fields = [
-            'title' => wp_kses($args['data']['title'] ?? '', [
-                'span' => []
-            ]) ?: get_the_title(),
+            'title' => $title,
             'type' => $args['data']['type'] ?? 'h2',
             'color' => $args['data']['color'] ?? ''
         ];

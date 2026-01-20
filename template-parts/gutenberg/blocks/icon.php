@@ -10,9 +10,10 @@
             'style' => $args['data']['style'] ?? null
         ];
 
-        $blockClass = 'icon';
+        $blockClass = !empty($args['blockClass']) ? $args['blockClass'] . '__icon icon' : 'icon';
+        $svgCSS = $blockClass;
 
-        if(isset($fields['isRounded'])) {
+        if(!empty($fields['isRounded'])) {
             $blockClass = isset($args['blockClass']) ? $args['blockClass'] . '__icon-rounded icon-rounded' : 'icon-rounded';
             $svgCSS = isset($args['blockClass']) ? $args['blockClass'] . '__icon-rounded icon-rounded__icon' : 'icon-rounded__icon';
         }
