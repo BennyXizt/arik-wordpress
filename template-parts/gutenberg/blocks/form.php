@@ -2,7 +2,12 @@
     $args = $args ?? null;
 
     if($args) {
-
+        $fields = [
+            'tag' => $args['data']['tag'],
+            'title' => $args['data']['title_clone'],
+            'fields' => $args['data']['fields'],
+            'button'=> $args['data']['button']
+        ];
     }
     else {
         $fields = [
@@ -20,20 +25,19 @@
     ]
 ?>
 
-
-<form data-fsc-phpmailer action="/php/mail.php" method="POST" class="contacts__form form-contacts">
-    <div class="form-contacts__header">
+<form data-fsc-phpmailer action="/php/mail.php" method="POST" class="contacts__form form-contacts form">
+    <div class="form__header">
         <?php if(!empty($fields['tag'])): ?>
-            <div class="form-contacts__label">
+            <div class="form__label">
                 <?= esc_html($fields['tag']) ?>
             </div>
         <?php endif; ?>
         <?php if(!empty($fields['title'])) : ?>
-            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'form-contacts', 'data'=>$fields['title']]); ?>
+            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'form', 'data'=>$fields['title']]); ?>
         <?php endif; ?>
     </div>
     <?php if(!empty($fields['fields'])): ?>
-        <div class="form-contacts__body">
+        <div class="form__body">
             <?php foreach($fields['fields'] as $field) :
                 $type = $field['type'];    
                 $required = $field['required'];
@@ -41,9 +45,9 @@
                 $placeholder = $field['placeholder'];
             ?>
                 <?php if($type == 'textarea'): ?>
-                       <textarea <?= $required ? 'required' : '' ?> type="<?= esc_attr($type) ?>" name="<?= esc_attr($name)?>" placeholder="<?= esc_attr($placeholder)?>" autocomplete="<?= $autocomplete[$name] ?? 'off'?>" class="form-contacts__input"></textarea>
+                       <textarea <?= $required ? 'required' : '' ?> type="<?= esc_attr($type) ?>" name="<?= esc_attr($name)?>" placeholder="<?= esc_attr($placeholder)?>" autocomplete="<?= $autocomplete[$name] ?? 'off'?>" class="form__input"></textarea>
                 <?php else: ?>
-                    <input <?= $required ? 'required' : '' ?> type="<?= esc_attr($type) ?>" name="<?= esc_attr($name)?>" placeholder="<?= esc_attr($placeholder)?>" autocomplete="<?= $autocomplete[$name] ?? 'off' ?>" class="form-contacts__input">
+                    <input <?= $required ? 'required' : '' ?> type="<?= esc_attr($type) ?>" name="<?= esc_attr($name)?>" placeholder="<?= esc_attr($placeholder)?>" autocomplete="<?= $autocomplete[$name] ?? 'off' ?>" class="form__input">
                 <?php endif; ?>
             <?php endforeach; ?>
             <?php if(!empty($fields['button'])) : ?>

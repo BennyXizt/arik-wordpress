@@ -99,12 +99,15 @@ function util_displayLogo($class) {
     }
 
 }
- function util_getIcon($url) {
-    $data = [
-        'file' => get_template_directory_uri() . '/assets/media/icons/sprite.svg',
-        'rounded' => true,
-        'size' => '38'
-    ];
+ function util_getIcon($url, $data = null) {
+    if(!$data) {
+        $data = [
+            'file' => get_template_directory_uri() . '/assets/media/icons/sprite.svg',
+            'rounded' => true,
+            'size' => '38'
+        ];
+    }
+ 
 
     switch (true) {
         case str_contains($url, 'instagram'): {
@@ -167,6 +170,13 @@ function util_displayLogo($class) {
             return get_template_part('template-parts/gutenberg/blocks/icon', null, ['blockClass'=>'social', 
             'data'=> array_merge($data, [
                 'icon_name' => 'ph_youtube-logo-light',
+            ])]);
+        }
+
+        case str_contains($url, 'facebook'): {
+            return get_template_part('template-parts/gutenberg/blocks/icon', null, ['blockClass'=>'social', 
+            'data'=> array_merge($data, [
+                'icon_name' => 'ph_facebook-logo-light',
             ])]);
         }
     }

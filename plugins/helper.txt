@@ -6,6 +6,8 @@ esc_url($var); // href, src, action
 esc_attr($var); // attr
 wp_get_attachment_image($fields['image']['ID'], 'full', false, ['class'=>'']); // responsive img
 get_theme_mod('CustomizeSettingsID'); // get value from customizer
+get_template_directory(''); // path to a file
+get_template_directory_uri(''); // link to a file
 
 // custom post
 get_posts([

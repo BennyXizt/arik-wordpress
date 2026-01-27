@@ -4,6 +4,7 @@ class Custom_Gutenberg {
     private $theme_id;
     private $block_category;
     private $section_category;
+    private $blocks;
 
     public function __construct($theme_id = null) {
         if(!$theme_id) {
@@ -13,6 +14,18 @@ class Custom_Gutenberg {
 
         $this->block_category = 'block';
         $this->section_category = 'section';
+
+        $this->blocks = [
+            'block' => [
+                'name' => 'blog',
+                'title' => __('Blog', $this->theme_id),
+                'description' => __('Blog Block для Gutenberg с ACF', $this->theme_id),
+                'render_callback' => [$this, 'render_template_callback'],
+                'icon' => 'welcome-widgets-menus',
+                'keywords' => ['example', 'acf'],
+                'mode' => 'preview',
+            ],
+        ];
 
         add_theme_support('editor-styles');
         add_action('enqueue_block_editor_assets', [$this, 'mytheme_gutenberg_editor_assets']);
@@ -84,6 +97,7 @@ class Custom_Gutenberg {
 
     public function init() {
         if( function_exists('acf_register_block_type') ) {
+            $this->add_new_blocks();
             $this->add_new_block('title');
             $this->add_new_block('text');
             $this->add_new_block('header-text');
@@ -100,6 +114,10 @@ class Custom_Gutenberg {
             $this->add_new_section('about');
             $this->add_new_section('contacts');
             $this->add_new_section('hero-service');
+            $this->add_new_section('hero-service');
+            $this->add_new_section('stats');
+            $this->add_new_section('service-list');
+            $this->add_new_section('hero-about');
         }
     }
 
@@ -111,33 +129,30 @@ class Custom_Gutenberg {
 
         $unallowedTypes = ['color_picker', 'button_group'];
 
-        foreach($block['data'] as $key => $value) {
-            $field_object = acf_get_field($key);
+        if(!empty($block['data'])) {
+            foreach($block['data'] as $key => $value) {
+                $field_object = acf_get_field($key);
 
-            if($field_object) {
-                $field_type = $field_object['type'];
-            }
-            
-            if(strpos($key, '_') === 0 || in_array($field_type, $unallowedTypes)) continue;
+                if($field_object) {
+                    $field_type = $field_object['type'];
+                }
+                
+                if(strpos($key, '_') === 0 || in_array($field_type, $unallowedTypes)) continue;
 
-            
+                
 
-            if (is_array($value)) {
-                if (!empty(array_filter($value))) {
+                if (is_array($value)) {
+                    if (!empty(array_filter($value))) {
+                        $has_content = true;
+                        break;
+                    }
+                } elseif ($value !== '' && $value !== null) {
                     $has_content = true;
                     break;
                 }
-            } elseif ($value !== '' && $value !== null) {
-                $has_content = true;
-                break;
             }
-        }
-
-        $block_data  = $block;
-        $inner_html  = $content;
-        $preview     = $is_preview;
-        $post_id     = $post_id;
-
+        } else $has_content = true;
+        
         if($block['supports']['acf_type'] === $this->block_category) {
             $template_file = get_template_directory() . "/template-parts/gutenberg/blocks/{$name}.php";
         }
@@ -149,38 +164,38 @@ class Custom_Gutenberg {
         if($has_content && file_exists($template_file)) {
             include $template_file;
         }
-        else {        
+        else if($has_content && !file_exists($template_file)) {    
+            $localized_message = __('Gutenberg Block: Block Template не найдет', $this->theme_id);
+            include $empty_template;
+        }
+        else {
+            $localized_message = __('Gutenberg Block: заполните поля', $this->theme_id);
             include $empty_template;
         }
     }
 
-    public function add_new_block($name) {
-        acf_register_block_type(array(
-            'name' => $name,
-            'title' => ucfirst($name),
-            'description' => sprintf(
-                __('%s Block для Gutenberg с ACF', $this->theme_id),
-                ucfirst($name)
-            ),
-            'render_callback' => [$this, 'render_template_callback'],
-            'category' => $this->block_category,
-            'icon' => 'welcome-widgets-menus',
-            'keywords' => array( 'example', 'acf' ),
-            'mode' => 'auto',
-            'supports'        => [
-                'align' => true,
-                'jsx'   => true,
-                'acf_type' => $this->block_category
-                // 'color' => [
-                //     'text' => true,
-                //     'background' => true
-                // ],
-                // 'typography' => [
-                //     'fontSize' => true,
-                //     'lineHeight' => true
-                // ]
-            ],
-        ));
+    public function add_new_block($name, $data = []) {
+        if(empty($data)) {
+            acf_register_block_type(array(
+                'name' => $name,
+                'title' => ucfirst($name),
+                'description' => sprintf(
+                    __('%s Block для Gutenberg с ACF', $this->theme_id),
+                    ucfirst($name)
+                ),
+                'render_callback' => [$this, 'render_template_callback'],
+                'category' => $this->block_category,
+                'icon' => 'welcome-widgets-menus',
+                'keywords' => array( 'example', 'acf' ),
+                'mode' => 'auto',
+                'supports'        => [
+                    'align' => true,
+                    'jsx'   => true,
+                    'acf_type' => $this->block_category
+                ],
+            ));
+        }
+        else acf_register_block_type($data);
     }
     public function add_new_section($name) {
          acf_register_block_type(array(
@@ -201,5 +216,17 @@ class Custom_Gutenberg {
                 'acf_type' => $this->section_category
             ],
         ));
+    }
+    public function add_new_blocks() {
+        foreach($this->blocks as $config) {
+            acf_register_block_type(array_merge($config, [
+                'category' => $this->block_category,
+                'supports' => [
+                    'align' => true,
+                    'jsx'   => true,
+                    'acf_type' => $this->block_category
+                ],
+            ]));
+        }
     }
 }
