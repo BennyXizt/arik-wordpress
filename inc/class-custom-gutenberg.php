@@ -20,7 +20,6 @@ class Custom_Gutenberg {
                 'name' => 'blog',
                 'title' => __('Blog', $this->theme_id),
                 'description' => __('Blog Block для Gutenberg с ACF', $this->theme_id),
-                'render_callback' => [$this, 'render_template_callback'],
                 'icon' => 'welcome-widgets-menus',
                 'keywords' => ['example', 'acf'],
                 'mode' => 'preview',
@@ -152,7 +151,7 @@ class Custom_Gutenberg {
                 }
             }
         } else $has_content = true;
-        
+
         if($block['supports']['acf_type'] === $this->block_category) {
             $template_file = get_template_directory() . "/template-parts/gutenberg/blocks/{$name}.php";
         }
@@ -197,29 +196,32 @@ class Custom_Gutenberg {
         }
         else acf_register_block_type($data);
     }
-    public function add_new_section($name) {
-         acf_register_block_type(array(
-            'name' => $name,
-            'title' => ucfirst($name),
-            'description' => sprintf(
-                __('%s Section для Gutenberg с ACF', $this->theme_id),
-                ucfirst($name)
-            ),
-            'render_callback' => [$this, 'render_template_callback'],
-            'category' => $this->section_category,
-            'icon' => 'screenoptions',
-            'keywords' => array( 'example', 'acf' ),
-            'mode' => 'auto',
-            'supports'        => [
-                'align' => true,
-                'jsx'   => true,
-                'acf_type' => $this->section_category
-            ],
-        ));
+    public function add_new_section($name, $data = []) {
+        if(empty($data)) {
+            acf_register_block_type(array(
+                'name' => $name,
+                'title' => ucfirst($name),
+                'description' => sprintf(
+                    __('%s Section для Gutenberg с ACF', $this->theme_id),
+                    ucfirst($name)
+                ),
+                'render_callback' => [$this, 'render_template_callback'],
+                'category' => $this->section_category,
+                'icon' => 'screenoptions',
+                'keywords' => array( 'example', 'acf' ),
+                'mode' => 'auto',
+                'supports'        => [
+                    'align' => true,
+                    'jsx'   => true,
+                    'acf_type' => $this->section_category
+                ],
+            ));
+        } else acf_register_block_type($data);
     }
     public function add_new_blocks() {
         foreach($this->blocks as $config) {
             acf_register_block_type(array_merge($config, [
+                'render_callback' => [$this, 'render_template_callback'],
                 'category' => $this->block_category,
                 'supports' => [
                     'align' => true,
