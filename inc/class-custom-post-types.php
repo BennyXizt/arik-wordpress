@@ -17,6 +17,7 @@ class Custom_Post_Type {
             ],
             'supports'      => ['title', 'editor', 'thumbnail'],
             'menu_icon'     => 'dashicons-portfolio',
+            'taxonomies' => ['category'],
         ]
     ];
 

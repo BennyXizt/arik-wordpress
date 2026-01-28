@@ -4,7 +4,7 @@
     if($args) {
         $id = $args['data']->ID;
         $background = get_field('background', $id) ?: [];
-        $terms = get_the_terms($id, 'work_category');
+        $terms = get_the_terms($id, 'category');
         $term = $terms[0] ?? [];
 
         $fields = [
