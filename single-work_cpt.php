@@ -4,7 +4,7 @@
         'description' => get_field('description'),
         'button' => get_field('button_work'),
         'infos' => get_field('infos'),
-    ]
+    ];
 ?>
 <main class="layout layout--worksingle">
     <section class="layout__hero-singlework hero-singlework">

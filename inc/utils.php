@@ -20,12 +20,15 @@ function util_buildMenu($menuItems, $parentID = 0) {
 }
 function util_generateMenus($menu, $class = 'menu', $parentClass = 'menu', $depth = 0) {
     if(empty( $menu )) return;
+    
+    global $wp;
+    $current_url = $wp->request;
 
 
     echo "<ul class='{$class}__list'>";
 
     foreach($menu as $element) {
-        $activeLinkPageClass = in_array('current-menu-item', $element['item']->classes) ? "{$class}__link--active" : '';
+        $activeLinkPageClass = strtolower($current_url) === strtolower($element['item']->title) ? "{$class}__link--active" : '';
         $submenuClass = !empty($element['children']) ? 'submenu-'.$parentClass : '';
         $liClass = !empty($element['children']) ? "{$class}__item {$class}__item--submenu {$submenuClass}" : "{$class}__item";
         $linkClass = !empty($element['children']) ? "{$class}__link {$class}__link--submenu {$activeLinkPageClass}" : "{$class}__link {$activeLinkPageClass}";

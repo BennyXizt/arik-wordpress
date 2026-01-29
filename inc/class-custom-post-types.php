@@ -18,6 +18,9 @@ class Custom_Post_Type {
             'supports'      => ['title', 'editor', 'thumbnail'],
             'menu_icon'     => 'dashicons-portfolio',
             'taxonomies' => ['category'],
+            'has_archive' => false,
+            // 'rewrite' => false,
+            'rewrite' => ['slug'=>'work'],
         ]
     ];
 
