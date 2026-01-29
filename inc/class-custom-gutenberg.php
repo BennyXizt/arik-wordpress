@@ -104,6 +104,7 @@ class Custom_Gutenberg {
             $this->add_new_block('button-link');
             $this->add_new_block('work-card');
             $this->add_new_block('form');
+            $this->add_new_block('info');
             $this->add_new_section('hero');
             $this->add_new_section('clients');
             $this->add_new_section('services');
@@ -117,6 +118,7 @@ class Custom_Gutenberg {
             $this->add_new_section('stats');
             $this->add_new_section('service-list');
             $this->add_new_section('hero-about');
+            $this->add_new_section('about-singlework');
         }
     }
 
