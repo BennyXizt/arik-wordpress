@@ -61,11 +61,6 @@ class Custom_Gutenberg {
                         'inline' => 'span',
                         'classes' => '',
                     ],
-                    [
-                        'title' => 'Span Highlight',
-                        'inline' => 'span',
-                        'classes' => 'highlight',
-                    ],
                 ]
             ]
         ]);

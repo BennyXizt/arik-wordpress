@@ -6,7 +6,8 @@
         $title = '';
         if(!empty($args['data']['title'] && $args['data']['title'] !== null)) {
             $title = wp_kses($args['data']['title'] ?? '', [
-                'span' => []
+                'span' => [],
+                'br' => []
             ]) ?: get_the_title();
         }
 

@@ -23,7 +23,7 @@
 <div class="workCard">
     <div class="workCard__background">
         <?php if(!empty($fields['link'])) : ?>
-            <a href="<?= esc_url($fields['link']) ?>">
+            <a href="<?= esc_url($fields['link']) ?>" class="workCard__link">
         <?php endif; ?>
             <?php if(!empty($fields['noise'])) : ?>
                 <figure class="workCard__noise image">
@@ -50,7 +50,7 @@
             ]]) ?>
         <?php endif; ?>
         <?php if(!empty($fields['termLink'])) : ?>
-            <a href="<?= esc_url($fields['termLink']) ?>">
+            <a href="<?= esc_url($fields['termLink']) ?>" class="workCard__link">
         <?php endif; ?>
         <?php if(!empty($fields['term'])) : ?>
             <span class="workCard__text">
