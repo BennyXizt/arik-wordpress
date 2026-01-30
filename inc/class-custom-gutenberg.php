@@ -5,6 +5,7 @@ class Custom_Gutenberg {
     private $block_category;
     private $section_category;
     private $blocks;
+    private $sections;
 
     public function __construct($theme_id = null) {
         if(!$theme_id) {
@@ -19,19 +20,24 @@ class Custom_Gutenberg {
             'block' => [
                 'name' => 'blog',
                 'title' => __('Blog', $this->theme_id),
-                'description' => __('Blog Block для Gutenberg с ACF', $this->theme_id),
-                'icon' => 'welcome-widgets-menus',
-                'keywords' => ['example', 'acf'],
                 'mode' => 'preview',
             ],
         ];
 
-        add_theme_support('editor-styles');
+        $this->sections = [
+            'section' => [
+                'name' => 'service-list',
+                'title' => __('Service List', $this->theme_id),
+                'mode' => 'preview',
+            ]
+        ];
+
+        add_action('acf/init', [$this, 'init']);
         add_action('enqueue_block_editor_assets', [$this, 'mytheme_gutenberg_editor_assets']);
+        
         add_filter('block_categories_all', [$this, 'add_new_category'], 10, 1);
         add_filter('acf/fields/wysiwyg/toolbars', [$this, 'change_standart_tinymce_toolbal'], 10, 1);
         add_filter('tiny_mce_before_init', [$this, 'add_support_span'], 10, 1);
-        add_action('acf/init', [$this, 'init']);
     }
 
     public function mytheme_gutenberg_editor_assets() {
@@ -92,6 +98,7 @@ class Custom_Gutenberg {
     public function init() {
         if( function_exists('acf_register_block_type') ) {
             $this->add_new_blocks();
+            $this->add_new_sections();
             $this->add_new_block('title');
             $this->add_new_block('text');
             $this->add_new_block('header-text');
@@ -111,7 +118,6 @@ class Custom_Gutenberg {
             $this->add_new_section('hero-service');
             $this->add_new_section('hero-service');
             $this->add_new_section('stats');
-            $this->add_new_section('service-list');
             $this->add_new_section('hero-about');
             $this->add_new_section('about-singlework');
         }
@@ -196,36 +202,57 @@ class Custom_Gutenberg {
     public function add_new_section($name, $data = []) {
         if(empty($data)) {
             acf_register_block_type(array(
-                'name' => $name,
-                'title' => ucfirst($name),
-                'description' => sprintf(
+                'name'              => $name,
+                'title'             => ucfirst($name),
+                'description'       => sprintf(
                     __('%s Section для Gutenberg с ACF', $this->theme_id),
                     ucfirst($name)
                 ),
-                'render_callback' => [$this, 'render_template_callback'],
-                'category' => $this->section_category,
-                'icon' => 'screenoptions',
-                'keywords' => array( 'example', 'acf' ),
-                'mode' => 'auto',
-                'supports'        => [
-                    'align' => true,
-                    'jsx'   => true,
-                    'acf_type' => $this->section_category
+                'render_callback'   => [$this, 'render_template_callback'],
+                'category'          => $this->section_category,
+                'icon'              => 'screenoptions',
+                'keywords'          => array( 'example', 'acf' ),
+                'mode'              => 'auto',
+                'supports'          => [
+                    'align'     => true,
+                    'jsx'       => true,
+                    'acf_type'  => $this->section_category
                 ],
             ));
         } else acf_register_block_type($data);
     }
     public function add_new_blocks() {
         foreach($this->blocks as $config) {
-            acf_register_block_type(array_merge($config, [
-                'render_callback' => [$this, 'render_template_callback'],
-                'category' => $this->block_category,
-                'supports' => [
-                    'align' => true,
-                    'jsx'   => true,
-                    'acf_type' => $this->block_category
+            acf_register_block_type(array_merge([
+                'description'       => __('Blog Block для Gutenberg с ACF', $this->theme_id),
+                'render_callback'   => [$this, 'render_template_callback'],
+                'category'          => $this->block_category,
+                'icon'              => 'welcome-widgets-menus',
+                'keywords'          => ['example', 'acf'],
+                'mode'              => 'auto',
+                'supports'          => [
+                    'align'     => true,
+                    'jsx'       => true,
+                    'acf_type'  => $this->block_category
                 ],
-            ]));
+            ], $config));
+        }
+    }
+    public function add_new_sections() {
+        foreach($this->sections as $config) {
+            acf_register_block_type(array_merge([
+                'description'       => __('Section Block для Gutenberg с ACF', $this->theme_id),
+                'render_callback'   => [$this, 'render_template_callback'],
+                'category'          => $this->section_category,
+                'icon'              => 'screenoptions',
+                'keywords'          => ['example', 'acf'],
+                'mode'              => 'auto',
+                'supports'          => [
+                    'align'     => true,
+                    'jsx'       => true,
+                    'acf_type'  => $this->section_category
+                ],
+            ], $config));
         }
     }
 }

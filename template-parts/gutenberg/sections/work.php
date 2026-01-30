@@ -15,9 +15,7 @@
     <div class="work__container container">
     <div class="work__header">
         <?php if(!empty($fields['title_clone'])): ?>
-            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'work', 'data'=>array_merge($fields['title_clone'], [
-                'title' => null
-            ])]); ?>
+            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'work', 'data'=>$fields['title_clone']]); ?>
         <?php endif; ?>
         <?php if(!empty($fields['button_clone'])) : ?>
             <?php get_template_part('template-parts/gutenberg/blocks/button-link', null, ['blockClass'=>'work', 'data'=>$fields['button_clone']]); ?>
