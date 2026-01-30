@@ -8,6 +8,9 @@
     function generateFooterMenu($menu, $class = 'body-footer', $dept = 0) {
         if(empty( $menu )) return;
 
+        global $wp;
+        $current_url = $wp->request;
+
         echo '<ul class="body-footer__list">';
         foreach($menu as $element) {
             echo "<li class='{$class}__item". ($element['children'] ? " {$class}__item--submenu submenu-{$dept}" : "") ."'>";
@@ -21,8 +24,10 @@
                     echo '<ul data-fsc-accordion-body class="accordion__body">';
                     if($element['children']) {
                         foreach ($element['children'] as $child) {
+                            $activeLinkPageClass = strtolower($current_url) === strtolower($child['item']->title) ? "menu__link menu__link--active" : '';
+                            
                             echo '<li>';
-                            echo '<a href = "'. esc_url($child['item']->url) .'">'. esc_html($child['item']->title)  .'</a>';
+                            echo '<a href = "'. esc_url($child['item']->url) .'" class="'. $activeLinkPageClass .'">'. esc_html($child['item']->title)  .'</a>';
                             echo '<li>';
                         }
                     }
