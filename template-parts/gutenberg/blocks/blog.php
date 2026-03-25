@@ -24,7 +24,7 @@
                 $term = $terms[0] ?? [];
                 $term_link = get_term_link($term->term_id);
             ?>
-                <article class="body-posts__postCard postCard">
+                <article class="body-posts__postCard postCard" data-fsc-watcher data-fsc-watcher-once>
                     <a href="<?= esc_url($link); ?>" class="postCard__link-image">
                         <figure class="postCard__noise image">
                             <img src="<?= get_template_directory_uri() . '/assets/media/image/works/Noise.png'?>" />

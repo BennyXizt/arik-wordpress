@@ -15,7 +15,9 @@
 <section class="layout__about about">
     <article class="about__top top-about">
         <?php if(!empty($fields['left_label'])) : ?>
-            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'top-about', 'data'=>$fields['left_label']]) ?>
+            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'top-about', 'data' => array_merge($fields['left_label'], [
+                'dataAttribute'=>'data-fsc-watcher data-fsc-watcher-once'
+            ])]) ?>
         <?php endif; ?>
         <?php if(!empty($fields['image'])) : ?>
             <figure class="top-about__image image">
@@ -23,11 +25,13 @@
             </figure>
         <?php endif; ?>
         <?php if(!empty($fields['right_label'])) : ?>
-            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'top-about', 'data'=>$fields['right_label']]) ?>
+            <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'top-about', 'data' => array_merge($fields['right_label'], [
+                'dataAttribute'=>'data-fsc-watcher data-fsc-watcher-once'
+            ])]) ?>
         <?php endif; ?>
     </article>
     <div class="about__container container">
-    <article class="about__wrapper wrapper-about">
+    <article class="about__wrapper wrapper-about" data-fsc-watcher data-fsc-watcher-once>
         <?php if(!empty($fields['title_clone'])) : ?>
             <div class="wrapper-about__left">
                 <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'wrapper-about', 'data'=>$fields['title_clone']]) ?>
@@ -38,7 +42,7 @@
                 <?php get_template_part('template-parts/gutenberg/blocks/text', null, ['blockClass'=>'wrapper-about', 'data'=>$fields['text_clone']]) ?>
             <?php endif; ?>
             <?php if(!empty($socials)) : ?>
-                <ul class="wrapper-about__social social">
+                <ul class="wrapper-about__social social" data-fsc-watcher data-fsc-watcher-once>
                     <?php foreach($socials as $social) : ?>
                         <li class="social__item">
                             <?php if(!empty($social->url)) : ?>

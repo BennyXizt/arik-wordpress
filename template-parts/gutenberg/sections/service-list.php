@@ -27,7 +27,7 @@
                 'list' => get_field('list', $id)
             ];
         ?>
-            <article class="service-list__service-list-item item-list-service" id="<?= esc_attr($term->slug) ?>">
+            <article class="service-list__service-list-item item-list-service" id="<?= esc_attr($term->slug) ?>" data-fsc-watcher data-fsc-watcher-once>
                 <?php if(!empty($term)) : ?>
                     <div class="item-list-service__tag">
                         <?=esc_html($term->slug)?>

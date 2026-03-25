@@ -12,7 +12,7 @@
 
 
 <section class="layout__work work">
-    <div class="work__container container">
+    <div class="work__container container" data-fsc-watcher data-fsc-watcher-once>
     <div class="work__header">
         <?php if(!empty($fields['title_clone'])): ?>
             <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'work', 'data'=>$fields['title_clone']]); ?>

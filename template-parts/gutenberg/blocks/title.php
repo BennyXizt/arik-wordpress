@@ -14,7 +14,8 @@
         $fields = [
             'title' => $title,
             'type' => $args['data']['type'] ?: 'h2',
-            'color' => $args['data']['color'] ?? ''
+            'color' => $args['data']['color'] ?? '',
+            'dataAttribute' => $args['data']['dataAttribute'] ?? ''
         ];
     } else {
         $blockClass = '';
@@ -25,6 +26,7 @@
             ]) ?: get_the_title(),
             'type' => get_field('type') ?: 'h2',
             'color' => get_field('color') ?? '',
+            'dataAttribute' => get_field('dataAttribute') ?? ''
         ];
     }
 
@@ -32,7 +34,7 @@
 ?>
 
 <?php if(!empty($fields['title'])) : ?>
-    <<?=$fields['type']?> <?=$blockClass?> <?=$color?>>
+    <<?=$fields['type']?> <?=$blockClass?> <?=$fields['dataAttribute']?> <?=$color?>>
         <?= $fields['title'] ?>
     </<?=$fields['type']?>>
 <?php endif; ?>

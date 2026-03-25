@@ -7,7 +7,7 @@
 
 
 <section class="layout__hero-services hero-services">
-    <div class="hero-services__container container">
+    <div class="hero-services__container container" data-fsc-watcher data-fsc-watcher-once>
         <?php if(!empty($fields['headertext'])) : ?>
             <?php get_template_part('template-parts/gutenberg/blocks/header-text', null, ['blockClass'=>'hero-services', 'data'=>$fields['headertext']]) ?>
         <?php endif; ?>

@@ -47,7 +47,7 @@
     }
 
     $dataAttributes = $fields['scroll'] ? 
-        'data-fsc-scroll data-fsc-scroll-to="'. esc_html($fields['scroll'])  .'" data-fsc-scroll-behaviour="smooth" data-fsc-scroll-block="end"' : '';
+        'data-fsc-scroll data-fsc-scroll-to="'. esc_html($fields['scroll'])  .'" data-fsc-scroll-behaviour="smooth" data-fsc-scroll-offset="120px" data-fsc-scroll-block="start"' : '';
 
     $blockType = $fields['hasLink'] ? 'a' : 'button';
     $blockTypeLink = null;

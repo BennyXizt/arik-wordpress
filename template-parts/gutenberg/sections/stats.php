@@ -6,7 +6,7 @@
 ?>
 
 <section class="layout__stats stats">
-    <div class="stats__container container">
+    <div class="stats__container container" data-fsc-watcher data-fsc-watcher-once>
         <?php if($fields['stats']) : ?>
             <?php foreach($fields['stats'] as $item) : ?>
                 <article class="stats__item item-stats">

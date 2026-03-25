@@ -5,7 +5,7 @@
     ];
 ?>
 
-<section class="layout__hero hero">
+<section class="layout__hero hero" data-fsc-watcher data-fsc-watcher-once>
     <div class="hero__container container">
         <figure class="hero__image image">
             <?php 
@@ -19,6 +19,5 @@
                get_template_part('template-parts/gutenberg/blocks/header-text', null, ['blockClass'=>'hero', 'data'=>$fields['headerText']]);
             }
         ?>
-           
     </div>
 </section>

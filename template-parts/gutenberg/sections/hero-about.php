@@ -12,7 +12,7 @@
 ?>
 
 <section class="layout__hero-about hero-about">
-    <div class="hero-about__container container">
+    <div class="hero-about__container container" data-fsc-watcher data-fsc-watcher-once>
         <?php if(!empty($fields['image'])) : ?>
             <figure class="hero-about__picture image">
                 <?= wp_get_attachment_image($fields['image']['ID'], 'full', false, ['class'=>'']);?>
@@ -25,7 +25,7 @@
             <?php endif; ?>
 
             <?php if(!empty($fields['aboutblock'])) : ?>
-                <article class="hero-about__content-about content-about">
+                <article class="hero-about__content-about content-about" data-fsc-watcher data-fsc-watcher-once>
                     <?php if(!empty($fields['aboutblock']['tag'])) : ?>
                         <span class="content-about__tag"> 
                             <?= esc_html($fields['aboutblock']['tag']) ?>    
@@ -56,7 +56,7 @@
                     'file' => get_template_directory_uri() . '/assets/media/icons/sprite.svg'
                 ];
             ?>
-                <ul class="hero-about__social social social--button">
+                <ul class="hero-about__social social social--button" data-fsc-watcher data-fsc-watcher-once>
                     <?php foreach($socials as $social) : ?>
                         <li class="social__item">
                             <?php if(!empty($social->url)) : ?>
@@ -77,7 +77,7 @@
             <?php endif; ?>
 
             <?php if(!empty($fields['awards'])) : ?>
-                 <article class="about__awards awards-about">
+                 <article class="about__awards awards-about" data-fsc-watcher data-fsc-watcher-once>
                     <?php if(!empty($fields['awards']['title'])) : ?>
                         <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'awards-about', 'data'=>$fields['awards']['title']]) ?>
                     <?php endif; ?>

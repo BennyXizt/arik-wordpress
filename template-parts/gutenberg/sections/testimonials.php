@@ -14,7 +14,7 @@
 ?>
 
 <section class="layout__testimonials testimonials">
-    <div class="testimonials__container container">
+    <div class="testimonials__container container" data-fsc-watcher data-fsc-watcher-once>
     <?php if(!empty($fields['headertext_clone'])) : ?>
         <?php get_template_part('template-parts/gutenberg/blocks/header-text', null, ['blockClass'=>'testimonials', 'data'=>$fields['headertext_clone']]) ?>
     <?php endif; ?>
@@ -32,7 +32,7 @@
                     $company = get_field('company', $id);
                 ?>
                 <li class="testimonials__item">
-                    <div class="testimonialCard">
+                    <div class="testimonialCard" data-fsc-watcher data-fsc-watcher-once>
                         <div class="testimonialCard__inner">
                             <?php if(!empty($logo)) : ?>
                                 <figure class="testimonialCard__logo image">

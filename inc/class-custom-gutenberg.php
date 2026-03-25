@@ -107,6 +107,8 @@ class Custom_Gutenberg {
             $this->add_new_block('work-card');
             $this->add_new_block('form');
             $this->add_new_block('info');
+            $this->add_new_block('title-text');
+            $this->add_new_block('conclusion');
             $this->add_new_section('hero');
             $this->add_new_section('clients');
             $this->add_new_section('services');
@@ -140,9 +142,7 @@ class Custom_Gutenberg {
                 }
                 
                 if(strpos($key, '_') === 0 || in_array($field_type, $unallowedTypes)) continue;
-
                 
-
                 if (is_array($value)) {
                     if (!empty(array_filter($value))) {
                         $has_content = true;
@@ -155,10 +155,10 @@ class Custom_Gutenberg {
             }
         } else $has_content = true;
 
-        if($block['supports']['acf_type'] === $this->block_category) {
+        if($block['category'] === $this->block_category) {
             $template_file = get_template_directory() . "/template-parts/gutenberg/blocks/{$name}.php";
         }
-        else if($block['supports']['acf_type'] === $this->section_category) {
+        else if($block['category'] === $this->section_category) {
             $template_file = get_template_directory() . "/template-parts/gutenberg/sections/{$name}.php";
         }
         $empty_template = get_template_directory() . "/template-parts/gutenberg/empty.php";
@@ -224,16 +224,18 @@ class Custom_Gutenberg {
     public function add_new_blocks() {
         foreach($this->blocks as $config) {
             acf_register_block_type(array_merge([
-                'description'       => __('Blog Block для Gutenberg с ACF', $this->theme_id),
+                'description'       => __('ACF Block для Gutenberg', $this->theme_id),
                 'render_callback'   => [$this, 'render_template_callback'],
                 'category'          => $this->block_category,
                 'icon'              => 'welcome-widgets-menus',
                 'keywords'          => ['example', 'acf'],
                 'mode'              => 'auto',
+                // 'api_version' => 3,
+                // 'acf_block_version' => 3,
                 'supports'          => [
-                    'align'     => true,
+                    'align'     => false,
                     'jsx'       => true,
-                    'acf_type'  => $this->block_category
+                    'customClassName' => false,
                 ],
             ], $config));
         }

@@ -20,7 +20,7 @@
     }
 ?>
 
-<div class="workCard">
+<li class="workCard" data-fsc-watcher data-fsc-watcher-once>
     <div class="workCard__background">
         <?php if(!empty($fields['link'])) : ?>
             <a href="<?= esc_url($fields['link']) ?>" class="workCard__link">
@@ -61,4 +61,4 @@
             </a>
         <?php endif; ?>
     </div>
-</div>
+</li>

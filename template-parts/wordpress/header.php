@@ -10,7 +10,7 @@
     <div class="header__container container">
         <div class="header__body">
             <?php util_displayLogo('header') ?>
-            <div class="header__menu menu">
+            <div class="header__menu menu" data-fsc-headermenu>
                 <nav class="menu__body">
                     <?php util_generateMenus($desktopMenu)?>
                 </nav>

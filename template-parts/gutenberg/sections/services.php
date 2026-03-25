@@ -18,7 +18,7 @@
                 $term = $terms[0];
                 $link = get_permalink($id);
             ?>
-                <article class="services__serviceCard serviceCard">
+                <article class="services__serviceCard serviceCard" data-fsc-watcher data-fsc-watcher-once>
                     <?php if(!empty($term)) : ?>
                         <?php get_template_part('template-parts/gutenberg/blocks/title', null, ['blockClass'=>'serviceCard', 'data'=>[
                             'title' => $term->name,

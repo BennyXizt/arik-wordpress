@@ -6,7 +6,8 @@
             'tag' => $args['data']['tag'],
             'title' => $args['data']['title_clone'],
             'fields' => $args['data']['fields'],
-            'button'=> $args['data']['button']
+            'button'=> $args['data']['button'],
+            'dataAttribute' => $args['data']['dataAttribute'] ?? ''
         ];
     }
     else {
@@ -14,7 +15,8 @@
             'tag' => get_field('tag'),
             'title' => get_field('title_clone'),
             'fields' => get_field('fields'),
-            'button'=> get_field('button')
+            'button'=> get_field('button'),
+            'dataAttribute' => get_field('dataAttribute') ?? ''
         ];
     }
 
@@ -25,7 +27,7 @@
     ]
 ?>
 
-<form data-fsc-phpmailer action="/php/mail.php" method="POST" class="contacts__form form-contacts form">
+<form class="contacts__form form-contacts form" <?=$fields['dataAttribute']?>>
     <div class="form__header">
         <?php if(!empty($fields['tag'])): ?>
             <div class="form__label">

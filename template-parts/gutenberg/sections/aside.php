@@ -11,9 +11,9 @@
 ?>
 
 <aside class="cta">
-  <article class="marquee">
+  <article class="marquee" data-fsc-marquee>
     <?php if(!empty($fields['marguees'])): ?>
-      <ul class="marquee__inner" data-fsc-marquee>
+      <ul class="marquee__inner" data-fsc-marquee-list>
         <?php foreach($fields['marguees'] as $item): ?>
           <li class="marquee__item" data-fsc-marquee-item>
             <?= esc_html($item['marquee']) ?>
@@ -25,7 +25,7 @@
   </article>
   <?php if(!empty($fields['headertext'])): ?>
     <section class="cta__body">
-      <div class="cta__container container">
+      <div class="cta__container container" data-fsc-watcher data-fsc-watcher-once>
         <?php get_template_part('template-parts/gutenberg/blocks/header-text', null, ['blockClass'=>'cta', 'data'=>$fields['headertext']]); ?>
       </div>
     </section>

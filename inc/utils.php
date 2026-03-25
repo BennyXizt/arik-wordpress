@@ -34,6 +34,7 @@ function util_generateMenus($menu, $class = 'menu', $parentClass = 'menu', $dept
         $linkClass = !empty($element['children']) ? "{$class}__link {$class}__link--submenu {$activeLinkPageClass}" : "{$class}__link {$activeLinkPageClass}";
         $spanClass = $depth === 0 ? "{$submenuClass}__trigger {$submenuClass}__trigger--first {$activeLinkPageClass}" : "{$submenuClass}__trigger";
         $iconClass = !empty($element['children']) ? $submenuClass : $class;
+        $iconWrapperClass = "{$iconClass}__wrapper";
 
         echo "<li class='{$liClass}'>";
             if($element['item']->url !== '#') {
@@ -47,11 +48,13 @@ function util_generateMenus($menu, $class = 'menu', $parentClass = 'menu', $dept
             echo $element['item']->title;
 
             if($element['children']) {
-                get_template_part('template-parts/gutenberg/blocks/icon', null, ['blockClass'=>$iconClass, 'data'=>[
-                    'file' => get_template_directory_uri() . '/assets/media/icons/sprite.svg',
-                    'icon_name' => 'ph_arrow-drop-down-line',
-                    'rounded' => false
-                ]]);
+                    echo "<div class='{$iconWrapperClass}'>";
+                        get_template_part('template-parts/gutenberg/blocks/icon', null, ['blockClass'=>$iconClass, 'data'=>[
+                            'file' => get_template_directory_uri() . '/assets/media/icons/sprite.svg',
+                            'icon_name' => 'ph_arrow-drop-down-line',
+                            'rounded' => false
+                        ]]);
+                    echo '</div>';
                 echo '</span>';
             }
 
@@ -102,7 +105,7 @@ function util_displayLogo($class) {
     }
 
 }
- function util_getIcon($url, $data = null) {
+function util_getIcon($url, $data = null) {
     if(!$data) {
         $data = [
             'file' => get_template_directory_uri() . '/assets/media/icons/sprite.svg',
@@ -183,4 +186,20 @@ function util_displayLogo($class) {
             ])]);
         }
     }
+}
+function util_get_reading_time($post_id = null) {
+    if(!$post_id) {
+        $post_id = get_the_ID();
+
+        if(!$post_id) return null;
+    }
+
+    $content = get_post_field('post_content', $post_id);
+
+    if(!$content) return null;
+
+    $wordsPerMinute = ceil(str_word_count(strip_tags($content)) / 200);
+
+
+    return $wordsPerMinute . ' Min';
 }

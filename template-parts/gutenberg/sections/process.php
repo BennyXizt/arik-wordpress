@@ -8,7 +8,7 @@
 <section class="layout__process process">
     <div class="process__container container">
         <?php if(!empty($fields['headertext_clone'])) : ?>
-            <div class="process__top">
+            <div class="process__top" data-fsc-watcher data-fsc-watcher-once>
                 <?php get_template_part('template-parts/gutenberg/blocks/header-text', null, ['blockClass'=>'process', 'data'=>$fields['headertext_clone']]); ?>
             </div>
         <?php endif; ?>
@@ -17,7 +17,7 @@
                 <?php foreach($fields['process_list'] as $process) : ?>
                     <li class="process__item">
                         <?php if($process['direction'] == 'left') : ?>
-                            <div class="processCard__wrapper">
+                            <div class="processCard__wrapper" data-fsc-watcher data-fsc-watcher-once>
                                 <?php if(!empty($process['time'])) : ?>
                                     <div class="processCard__time">
                                         <?= esc_html($process['time']) ?>
@@ -47,7 +47,7 @@
                         <?php else : ?>
                             <div class="process__empty"></div>
                             <div class="process__line"></div>
-                            <div class="processCard__wrapper">
+                            <div class="processCard__wrapper" data-fsc-watcher data-fsc-watcher-once>
                                 <?php if(!empty($process['time'])) : ?>
                                     <div class="processCard__time">
                                         <?= esc_html($process['time']) ?>

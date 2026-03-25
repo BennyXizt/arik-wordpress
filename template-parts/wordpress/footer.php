@@ -67,7 +67,7 @@
             <div class="body-footer__content content-footer">
                 <?php util_displayLogo('content-footer'); ?>
                 <?php if(!empty($socials)) : ?>
-                    <ul class="content-footer__social social social--vertical">
+                    <ul class="content-footer__social social social--vertical" data-fsc-watcher data-fsc-watcher-once>
                         <?php foreach($socials as $social) : ?>
                             <li class="social__item">
                                 <?php if(!empty($social->url)) : ?>

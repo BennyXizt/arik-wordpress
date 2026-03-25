@@ -32,11 +32,13 @@ $query = new WP_Query([
 if ($query->have_posts()) :
     while ($query->have_posts()): $query->the_post();
 wp_reset_postdata();
-
-$id = $post->ID;
+// global $post;
+$id = $post->ID | get_the_ID();
 $title = get_the_title($id);
-$content = get_the_content(null, false, $id);
+$content = get_the_content(null, false, $id) | the_content();
+$contentRAW = get_post_field('post_content', $post_id);
 $imageID = get_post_thumbnail_id($id);
+$categoryDefaultTaxonomy = get_the_category();
 $link = get_permalink($id);
 $date = get_the_date('d.m.Y', $id);
 $datetime = get_the_date('Y-m-d', $id); 
@@ -90,3 +92,19 @@ if($logo_file) {
 $sanitizedKey = sanitize_key(wp_get_theme()->get('Name') . 'ExistedCustomizeSettingID');
 $item = get_theme_mod($sanitizedKey, '');
 // get item from Customize
+?>
+
+// comments
+<?php if (comments_open() || get_comments_number()) : ?>
+    <?php comments_template(); ?>
+<?php endif; ?>
+// comments
+
+// get category name from categories
+<?php 
+$categories = array_map(
+    fn($e) => $e->name
+    , array_filter(get_the_category(), fn($e) => !empty($e->name))
+);
+$category = implode(', ', $categories);
+?>
