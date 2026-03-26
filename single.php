@@ -78,6 +78,6 @@
           <?=the_content()?>
         </div>
     </section>
-
+    <?php get_template_part('template-parts/gutenberg/sections/blognews') ?>
 </main>
 <?php get_footer(); ?>

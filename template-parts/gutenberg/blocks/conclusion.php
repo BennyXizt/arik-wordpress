@@ -1,7 +1,14 @@
 <?php
+    $author_id = get_post_field('post_author', get_the_ID());
+
     $fields = [
         'title' => get_field('title'),
         'text' => get_field('text'),
+        'author' => [
+            'name' => get_the_author_meta('display_name', $author_id),
+            'company' => get_field('company', 'user_' . $author_id),
+            'avatar' => get_field('avatar', 'user_' . $author_id),
+        ]
     ]
 ?>
 
@@ -20,18 +27,27 @@
             </div>
         <?php endif; ?>
     </div>
-    <div class="author-content__person avatar-testimonialCard">
-        <figure class="avatar-testimonialCard__image image">
-            <img src="media/image/clients/client7.png" />
-        </figure>
 
-        <div class="avatar-testimonialCard__content">
-            <span class="avatar-testimonialCard__name">
-                <?= esc_html(the_author()); ?>
-            </span>
-            <span class="avatar-testimonialCard__company">
-            Framer Expert
-            </span>
+    <?php if(!empty($fields['author'])) : ?>
+        <div class="author-content__person avatar-testimonialCard">
+            <?php if(!empty($fields['author']['avatar'])) : ?>
+                <figure class="avatar-testimonialCard__image image">
+                    <?= wp_get_attachment_image($fields['author']['avatar']['ID'], 'full', false, ['class'=>'']); ?>
+                </figure>
+            <?php endif; ?>
+
+            <div class="avatar-testimonialCard__content">
+                <?php if(!empty($fields['author']['name'])) : ?>
+                    <span class="avatar-testimonialCard__name">
+                        <?= esc_html($fields['author']['name']); ?>
+                    </span>
+                <?php endif; ?>
+                <?php if(!empty($fields['author']['company'])) : ?>
+                    <span class="avatar-testimonialCard__company">
+                        <?= esc_html($fields['author']['company']); ?>
+                    </span>
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 </article>

@@ -5,9 +5,11 @@ esc_html($var); // text
 esc_url($var); // href, src, action
 esc_attr($var); // attr
 wp_get_attachment_image($fields['image']['ID'], 'full', false, ['class'=>'']); // responsive img
+
 get_theme_mod('CustomizeSettingsID'); // get value from customizer
 get_template_directory(''); // path to a file
 get_template_directory_uri(''); // link to a file
+get_page_by_path('ExistedPageSlug'); // get a object of WP_Post | $page->ID
 
 // get curr page link
 global $wp;
@@ -33,17 +35,17 @@ if ($query->have_posts()) :
     while ($query->have_posts()): $query->the_post();
 wp_reset_postdata();
 // global $post;
-$id = $post->ID | get_the_ID();
-$title = get_the_title($id);
-$content = get_the_content(null, false, $id) | the_content();
+$post_id = $post->ID | get_the_ID();
+$title = get_the_title($post_id);
+$content = get_the_content(null, false, $post_id) | the_content();
 $contentRAW = get_post_field('post_content', $post_id);
-$imageID = get_post_thumbnail_id($id);
+$imageID = get_post_thumbnail_id($post_id);
 $categoryDefaultTaxonomy = get_the_category();
-$link = get_permalink($id);
-$date = get_the_date('d.m.Y', $id);
-$datetime = get_the_date('Y-m-d', $id); 
-$formatted_date = get_the_date('jS M Y', $id);
-$terms = get_the_terms($id, 'TaxonomySlug');
+$link = get_permalink($post_id);
+$date = get_the_date('d.m.Y', $post_id);
+$datetime = get_the_date('Y-m-d', $post_id); 
+$formatted_date = get_the_date('jS M Y', $post_id);
+$terms = get_the_terms($post_id, 'TaxonomySlug');
 $term_link = get_term_link($term->term_id);
 // custom post
 
@@ -107,4 +109,9 @@ $categories = array_map(
     , array_filter(get_the_category(), fn($e) => !empty($e->name))
 );
 $category = implode(', ', $categories);
+?>
+
+// edit acf field in block 
+<?php
+echo acf_inline_text_editing_attrs(‘my_text_field’);
 ?>

@@ -109,6 +109,7 @@ class Custom_Gutenberg {
             $this->add_new_block('info');
             $this->add_new_block('title-text');
             $this->add_new_block('conclusion');
+            $this->add_new_block('socials');
             $this->add_new_section('hero');
             $this->add_new_section('clients');
             $this->add_new_section('services');
@@ -122,6 +123,7 @@ class Custom_Gutenberg {
             $this->add_new_section('stats');
             $this->add_new_section('hero-about');
             $this->add_new_section('about-singlework');
+            $this->add_new_section('blognews');
         }
     }
 
@@ -161,17 +163,18 @@ class Custom_Gutenberg {
         else if($block['category'] === $this->section_category) {
             $template_file = get_template_directory() . "/template-parts/gutenberg/sections/{$name}.php";
         }
+
         $empty_template = get_template_directory() . "/template-parts/gutenberg/empty.php";
         
-        if($has_content && file_exists($template_file)) {
-            include $template_file;
+        if(file_exists($template_file)) {
+            if($has_content) include $template_file;
+            else {
+                $localized_message = __('Gutenberg Block: заполните поля', $this->theme_id);
+                include $empty_template;
+            }
         }
-        else if($has_content && !file_exists($template_file)) {    
-            $localized_message = __('Gutenberg Block: Block Template не найдет', $this->theme_id);
-            include $empty_template;
-        }
-        else {
-            $localized_message = __('Gutenberg Block: заполните поля', $this->theme_id);
+        else {    
+            $localized_message = __('Gutenberg Block: Block Template не найден<br><br>Path: ' . $template_file, $this->theme_id);
             include $empty_template;
         }
     }
